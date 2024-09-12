@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "bierner.comment-tagged-templates",
+    "biomejs.biome",
+    "bradlc.vscode-tailwindcss",
+    "humao.rest-client",
+    "usernamehw.errorlens",
+    "YoavBls.pretty-ts-errors",
+    "naumovs.color-highlight",
+  ]
+}
