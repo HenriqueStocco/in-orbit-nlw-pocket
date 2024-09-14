@@ -1,3 +1,4 @@
+### CREATE GOAL
 POST http://localhost:3333/goals
 Content-Type: application/json
 
@@ -6,5 +7,16 @@ Content-Type: application/json
   "desiredWeeklyFrequency": 3
 }
 
-### 
+### CREATE GOAL COMPLETION
+POST http://localhost:3333/completions
+Content-Type: application/json
+
+{
+  "goalId": ""
+}
+
+### GET PENDING GOALS
 GET http://localhost:3333/pending-goals
+
+### GET SUMMARY
+GET http://localhost:3333/summary
