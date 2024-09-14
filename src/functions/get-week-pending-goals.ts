@@ -1,16 +1,16 @@
-import dayjs from "dayjs"
-import weekOfYear from "dayjs/plugin/weekOfYear"
-import { db } from "../db"
-import { goalCompletions, goals } from "../db/schema"
-import { and, count, eq, gte, lte, sql } from "drizzle-orm"
+import dayjs from 'dayjs'
+import weekOfYear from 'dayjs/plugin/weekOfYear'
+import { db } from '../db'
+import { goalCompletions, goals } from '../db/schema'
+import { and, count, eq, gte, lte, sql } from 'drizzle-orm'
 
 dayjs.extend(weekOfYear)
 
 export async function getWeekPendingGoals() {
-  const firstDayOfWeek = dayjs().startOf("week").toDate()
-  const lastDayOfWeek = dayjs().endOf("week").toDate()
+  const firstDayOfWeek = dayjs().startOf('week').toDate()
+  const lastDayOfWeek = dayjs().endOf('week').toDate()
   // WITH Queries(COMMON TABLE EXPRESSION)
-  const goalsCreatedUpToWeek = db.$with("goals_created_up_to_week").as(
+  const goalsCreatedUpToWeek = db.$with('goals_created_up_to_week').as(
     db
       .select({
         id: goals.id,
@@ -19,23 +19,23 @@ export async function getWeekPendingGoals() {
         createdAt: goals.createdAt,
       })
       .from(goals)
-      .where(lte(goals.createdAt, lastDayOfWeek))
+      .where(lte(goals.createdAt, lastDayOfWeek)),
   )
   // WITH Queries(COMMON TABLE EXPRESSION)
-  const goalCompletionCounts = db.$with("goals_completion_counts").as(
+  const goalCompletionCounts = db.$with('goals_completion_counts').as(
     db
       .select({
         goalId: goalCompletions.goalId,
-        completionCount: count(goalCompletions.id).as("completionCount"),
+        completionCount: count(goalCompletions.id).as('completionCount'),
       })
       .from(goalCompletions)
       .where(
         and(
           gte(goalCompletions.createdAt, firstDayOfWeek),
-          lte(goalCompletions.createdAt, lastDayOfWeek)
-        )
+          lte(goalCompletions.createdAt, lastDayOfWeek),
+        ),
       )
-      .groupBy(goalCompletions.goalId)
+      .groupBy(goalCompletions.goalId),
   )
 
   const pendingGoals = await db
@@ -51,7 +51,7 @@ export async function getWeekPendingGoals() {
     .from(goalsCreatedUpToWeek)
     .leftJoin(
       goalCompletionCounts,
-      eq(goalCompletionCounts.goalId, goalsCreatedUpToWeek.id)
+      eq(goalCompletionCounts.goalId, goalsCreatedUpToWeek.id),
     )
 
   return { pendingGoals }
