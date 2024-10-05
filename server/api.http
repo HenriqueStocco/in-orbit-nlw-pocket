@@ -1,22 +1,22 @@
 ### CREATE GOAL
-POST http://localhost:3333/goals
+POST http://192.168.1.68:3333/goals
 Content-Type: application/json
 
 {
-  "title": "Nadar",
-  "desiredWeeklyFrequency": 3
+  "title": "Tocar violao",
+  "desiredWeeklyFrequency": 4
 }
 
 ### CREATE GOAL COMPLETION
-POST http://localhost:3333/completions
+POST http://192.168.1.68:3333/completions
 Content-Type: application/json
 
 {
-  "goalId": ""
+  "goalId": "qcnk2gflntk106pbi5l8odxb"
 }
 
 ### GET PENDING GOALS
-GET http://localhost:3333/pending-goals
+GET http://192.168.1.68:3333/pending-goals
 
 ### GET SUMMARY
-GET http://localhost:3333/summary
+GET http://192.168.1.68:3333/summary
